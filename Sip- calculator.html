@@ -1,0 +1,50 @@
+<!-- 🌟 Enhanced SIP + Lumpsum Calculator with dynamic results and smooth design -->
+<div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; padding: 20px;">
+  <h2 style="text-align: center; color: #0A2647;">Investment Calculator</h2>
+  <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <button onclick="showTab('sip')" style="background-color: #FDC500; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">SIP Calculator</button>
+    <button onclick="showTab('lumpsum')" style="background-color: #FDC500; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Lumpsum Calculator</button>
+  </div>
+
+  <div id="sip" style="margin-top: 20px; display:block;">
+    <h3 style="color: #0A2647;">SIP Calculator</h3>
+    <label style="font-size: 16px; color: #333;">Monthly Investment (₹): <input type="number" id="sipAmount" style="padding: 5px; width: 100%; border-radius: 5px; margin-bottom: 10px;" /></label><br/>
+    <label style="font-size: 16px; color: #333;">Investment Period (Years): <input type="number" id="sipYears" style="padding: 5px; width: 100%; border-radius: 5px; margin-bottom: 10px;" /></label><br/>
+    <label style="font-size: 16px; color: #333;">Expected Return Rate (%): <input type="number" id="sipRate" style="padding: 5px; width: 100%; border-radius: 5px; margin-bottom: 10px;" /></label><br/>
+    <button onclick="calculateSIP()" style="background-color: #FDC500; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Calculate</button>
+    <p id="sipResult" style="font-size: 18px; color: #0A2647; margin-top: 20px; font-weight: bold;"></p>
+  </div>
+
+  <div id="lumpsum" style="display:none; margin-top: 20px;">
+    <h3 style="color: #0A2647;">Lumpsum Calculator</h3>
+    <label style="font-size: 16px; color: #333;">Investment Amount (₹): <input type="number" id="lumpAmount" style="padding: 5px; width: 100%; border-radius: 5px; margin-bottom: 10px;" /></label><br/>
+    <label style="font-size: 16px; color: #333;">Investment Period (Years): <input type="number" id="lumpYears" style="padding: 5px; width: 100%; border-radius: 5px; margin-bottom: 10px;" /></label><br/>
+    <label style="font-size: 16px; color: #333;">Expected Return Rate (%): <input type="number" id="lumpRate" style="padding: 5px; width: 100%; border-radius: 5px; margin-bottom: 10px;" /></label><br/>
+    <button onclick="calculateLumpsum()" style="background-color: #FDC500; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Calculate</button>
+    <p id="lumpResult" style="font-size: 18px; color: #0A2647; margin-top: 20px; font-weight: bold;"></p>
+  </div>
+</div>
+
+<script>
+  function showTab(tab) {
+    document.getElementById('sip').style.display = tab === 'sip' ? 'block' : 'none';
+    document.getElementById('lumpsum').style.display = tab === 'lumpsum' ? 'block' : 'none';
+  }
+
+  function calculateSIP() {
+    const amount = parseFloat(document.getElementById('sipAmount').value);
+    const years = parseFloat(document.getElementById('sipYears').value);
+    const rate = parseFloat(document.getElementById('sipRate').value) / 100 / 12;
+    const n = years * 12;
+    const maturity = amount * ((Math.pow(1 + rate, n) - 1) * (1 + rate));
+    document.getElementById('sipResult').innerText = `Estimated Maturity: ₹${maturity.toFixed(2)}`;
+  }
+
+  function calculateLumpsum() {
+    const amount = parseFloat(document.getElementById('lumpAmount').value);
+    const years = parseFloat(document.getElementById('lumpYears').value);
+    const rate = parseFloat(document.getElementById('lumpRate').value) / 100;
+    const maturity = amount * Math.pow((1 + rate), years);
+    document.getElementById('lumpResult').innerText = `Estimated Maturity: ₹${maturity.toFixed(2)}`;
+  }
+</script>
